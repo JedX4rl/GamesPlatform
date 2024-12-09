@@ -219,6 +219,7 @@ function DrawMaze(Maze, ctx, cellsize, endSprite = null) {
   this.redrawMaze = function(size) {
     cellSize = size;
     ctx.lineWidth = cellSize / 50;
+
     drawMap();
     drawEndMethod();
   };
@@ -226,6 +227,12 @@ function DrawMaze(Maze, ctx, cellsize, endSprite = null) {
   function drawCell(xCord, yCord, cell) {
     var x = xCord * cellSize;
     var y = yCord * cellSize;
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(x, y, cellSize, cellSize);
+
+    // Рисуем стены ячейки
+    ctx.strokeStyle = "black";
 
     if (cell.n == false) {
       ctx.beginPath();
