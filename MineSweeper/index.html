@@ -10,11 +10,41 @@
 
 <body>
 <h1 style="color: white">Mines: <span id="mines-count">0</span></h1>
+<h2 style="color: white">Time: <span id="timer">0</span> seconds</h2>
 <div id="board"></div>
 <br>
 <button id="flag-button">🚩</button>
+<button id="start-button">▶️</button>
 <button id="reset-button">🔁</button>
 <button id="home-button" onclick="location.href='../index.html'">🏠</button>
 </body>
 
+<div id="win-modal" class="modal">
+    <div class="modal-content">
+        <span id="close-modal" class="close">&times;</span>
+        <h2>Вы выиграли!</h2>
+        <p>Введите свои данные:</p>
+        <form id="win-form">
+            <label for="nickname">Никнейм:</label>
+            <input type="text" id="nickname" name="nickname" required>
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+</div>
+
+<div id="leaderboard">
+    <h2>Таблица лидеров</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Никнейм</th>
+            <th>Рекорд</th>
+        </tr>
+        </thead>
+        <tbody id="leaderboard-body"></tbody>
+    </table>
+</div>
+
+
 </html>
+
