@@ -10,12 +10,12 @@ html, body {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #1e2073;
+    background-color: #1a1b2e;
     font-family: 'Poppins', sans-serif;
 }
 
 #view {
-    margin-top: 30px;
+    margin-top: 130px;
 }
 
 #mazeContainer {
@@ -100,12 +100,7 @@ input:focus, select:focus {
     height: 65px;
     box-sizing: border-box;
 }
-#page #menu h1 {
-    margin: 0;
-    margin-bottom: 10px;
-    font-weight: 600;
-    font-size: 3.2rem;
-}
+
 #page #view {
     position: absolute;
     top: 65px;
@@ -121,7 +116,112 @@ input:focus, select:focus {
 }
 
 #instructions {
-    margin-top: 425px;
+    margin-top: 450px;
+    font-size: 16px;
+    color: white;
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content form input {
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#leaderboard {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#leaderboard table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 50%;
+    background-color: #ffffff;
+}
+
+#win-modal span {
+    color: red;
+}
+
+.modal-content {
+    position: relative; /* Устанавливает контекст для дочерних элементов */
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #fefefe;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: auto;
+}
+
+
+#close-modal {
+    position: absolute; /* Располагает элемент относительно родителя */
+    top: 10px;          /* Отступ сверху */
+    right: 10px;        /* Отступ справа */
+    font-size: 24px;    /* Размер символа */
+    cursor: pointer;    /* Указатель мыши в виде руки */
+    color: #333;        /* Цвет */
+    background: none;   /* Убираем фон */
+    border: none;       /* Убираем рамку */
+}
+
+#leaderboard h2 {
+    color: white;
+}
+
+#leaderboard th, #leaderboard td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#leaderboard th {
+    background-color: #7289da;
+    color: white;
+}
+
+#home-button {
+    margin-bottom: 100px;
+    width: 100px;
+    height: 50px;
+    font-size: 30px;
+    background-color: lightgray;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
 }
 
 /* Extra small devices (phones, 600px and down) */
@@ -130,3 +230,4 @@ input:focus, select:focus {
         width: 120px;
     }
 }
+

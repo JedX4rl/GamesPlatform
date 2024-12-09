@@ -9,6 +9,8 @@ const snakeColor = "green";
 const snakeBorder = "black";
 const foodColor = "red";
 const unitSize = 25;
+let timerInterval;
+let elapsedTime = 0;
 let running = false;
 let xVelocity = unitSize;
 let yVelocity = 0;
@@ -31,10 +33,85 @@ gameStart();
 function gameStart(){
     running= true;
     scoreText.textContent = score;
+    fetchLeaderboard()
     createFood();
     drawFood();
     nextTick();
-};
+}
+
+function showWinModal() {
+    const modal = document.getElementById('win-modal');
+    const closeModal = document.getElementById('close-modal');
+    const form = document.getElementById('win-form');
+
+    modal.style.display = 'flex';
+
+    closeModal.onclick = () => {
+        modal.style.display = 'none';
+    };
+
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+
+        const nickname = document.getElementById('nickname').value;
+
+        // Отправка данных на бекенд
+        await submitScore(nickname, score);
+
+        modal.style.display = 'none';
+        await fetchLeaderboard(); // Обновление таблицы лидеров
+    };
+}
+
+
+async function submitScore(nickname, score) {
+    try {
+        const response = await fetch('http://localhost:8087/submit-score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nick_name: nickname,
+                game_name: 'snake',
+                score: score, // Каждый выигрыш увеличивает счет на 1
+            }),
+        });
+        if (!response.ok) {
+            throw new Error('Ошибка при отправке данных');
+        }
+        console.log('Данные успешно отправлены');
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function fetchLeaderboard() {
+    console.log("leader bord loading ")
+    try {
+        const response = await fetch('http://localhost:8087/high-score/snake', {
+            method: 'GET'
+        });
+
+        const leaderboard = await response.json();
+
+        const leaderboardBody = document.getElementById('leaderboard-body');
+        leaderboardBody.innerHTML = '';
+
+        leaderboard.forEach((record) => {
+            const row = document.createElement('tr');
+            console.log(record)
+            row.innerHTML = `<td>${record.NickName}</td><td>${record.Score}</td>`;
+            leaderboardBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Ошибка при загрузке таблицы лидеров:', error);
+    }
+}
+
+
+
+
 function nextTick(){
     if(running){
         setTimeout(()=>{
@@ -142,11 +219,13 @@ function checkGameOver(){
     }
 };
 function displayGameOver(){
+
     ctx.font = "50px Arial";
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
     ctx.fillText("GAME OVER!", gameWidth / 2, gameHeight / 2);
     running = false;
+    showWinModal()
 };
 function resetGame(){
     score = 0;
