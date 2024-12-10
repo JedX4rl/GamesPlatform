@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic_Tac_Toe</title>
     <link rel="stylesheet" href="style.css">
@@ -26,8 +25,12 @@
         <div class="box align">8</div>
     </div>
     <h2 id="results"></h2>
-    <button id="play-again">Play Again</button>
+    <div class="button-container">
+        <button id="two-player-mode">Two Player Mode</button>
+        <button id="computer-mode">Play Computer</button>
+        <button id="play-again">Play Again</button>
+        <button id="home-button" onclick="location.href='../index.html'">🏠</button>
+    </div>
     <script src="script.js"></script>
-    <button id="home-button" onclick="location.href='../index.html'">🏠</button>
 </body>
 </html>
