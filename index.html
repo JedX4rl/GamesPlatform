@@ -3,7 +3,7 @@
     <base href="">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Стимчик</title>
+    <title>313 - лучшая группа</title>
     <style>
         * {
             margin: 0;
@@ -93,12 +93,19 @@
         .hero {
             margin-top: 70px;
             height: 60vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
-            background-size: cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./images/Grisha.jpg');
+            background-size: cover; /* Изображение растягивается, чтобы заполнить контейнер */
+            background-position: center; /* Центрируем изображение */
+            background-repeat: no-repeat; /* Избегаем повторения изображения */
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+        }
+
+        .hero-content {
+            color: white; /* Текст на фоне */
+            z-index: 1;   /* Убедитесь, что текст отображается поверх изображения */
         }
 
         .hero-content h1 {
@@ -190,20 +197,22 @@
 </head>
 <body>
 <nav class="navbar">
-    <div class="logo">Стимчик</div>
-    <div class="nav-links">
-        <a href="">GitHub</a>
-    </div>
-    <div class="auth-buttons">
-        <button class="login-btn" onclick="showLogin()">Login</button>
-        <button class="signup-btn" onclick="showSignup()">Sign Up</button>
-    </div>
+    <div class="logo">313 - лучшая группа</div>
+<!--    <div class="nav-links">-->
+<!--        <a href="">GitHub</a>-->
+<!--    </div>-->
+<!--    <div class="auth-buttons">-->
+<!--        <button class="login-btn" onclick="showLogin()">Login</button>-->
+<!--        <button class="signup-btn" onclick="showSignup()">Sign Up</button>-->
+<!--    </div>-->
 </nav>
 
 <section class="hero">
     <div class="hero-content">
-        <h1>Игры фиита</h1>
-        <p>у нас есть много игр. бесплатно</p>
+<!--        <h1>Игры фиита</h1>-->
+        <h1>Григорий Мальцев</h1>
+<!--        <p>у нас есть много игр. бесплатно</p>-->
+        <p>Кучерявый</p>
     </div>
 </section>
 
@@ -250,6 +259,20 @@
         </div>
     </a>
 
+    <a href=Snake/index.html target="_self">
+
+        <div class="game-card">
+            <div class="game-image">
+                <img src="./images/test.png" alt="Snake">
+            </div>
+            <div class="game-info">
+                <h3>Snake</h3>
+                <p>Play with me</p>
+                <div class="game-price">Free!</div>
+            </div>
+        </div>
+
+    </a>
     <div class="game-card">
         <div class="game-image">
             <img src="./images/test.png" alt="ТикТОкХое">
@@ -260,46 +283,7 @@
             <div class="game-price">$2999.99</div>
         </div>
     </div>
-    <div class="game-card">
-        <div class="game-image">
-            <img src="./images/test.png" alt="ТикТОкХое">
-        </div>
-        <div class="game-info">
-            <h3>ТикТОкХое</h3>
-            <p>На подумать</p>
-            <div class="game-price">$2999.99</div>
-        </div>
-    </div>
-    <div class="game-card">
-        <div class="game-image">
-            <img src="./images/test.png" alt="ТикТОкХое">
-        </div>
-        <div class="game-info">
-            <h3>ТикТОкХое</h3>
-            <p>На подумать</p>
-            <div class="game-price">$2999.99</div>
-        </div>
-    </div>
-    <div class="game-card">
-        <div class="game-image">
-            <img src="./images/test.png" alt="ТикТОкХое">
-        </div>
-        <div class="game-info">
-            <h3>ТикТОкХое</h3>
-            <p>На подумать</p>
-            <div class="game-price">$2999.99</div>
-        </div>
-    </div>
-    <div class="game-card">
-        <div class="game-image">
-            <img src="./images/test.png" alt="ТикТОкХое">
-        </div>
-        <div class="game-info">
-            <h3>ТикТОкХое</h3>
-            <p>На подумать</p>
-            <div class="game-price">$2999.99</div>
-        </div>
-    </div>
+
 </section>
 
 <!-- Логинимся -->
@@ -343,33 +327,33 @@
 </div>
 
 <script>
-  function showLogin () {
-    document.getElementById('loginModal').style.display = 'flex'
-  }
-
-  function showSignup () {
-    document.getElementById('signupModal').style.display = 'flex'
-  }
-
-  function closeModal (modalId) {
-    document.getElementById(modalId).style.display = 'none'
-  }
-
-  window.onclick = function (event) {
-    if (event.target.className === 'auth-modal') {
-      event.target.style.display = 'none'
+    function showLogin() {
+        document.getElementById('loginModal').style.display = 'flex'
     }
-  }
 
-  document.getElementById('loginForm').onsubmit = function (e) {
-    e.preventDefault()
-    // Логика логина
-  }
+    function showSignup() {
+        document.getElementById('signupModal').style.display = 'flex'
+    }
 
-  document.getElementById('signupForm').onsubmit = function (e) {
-    e.preventDefault()
-    // Логика реги
-  }
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none'
+    }
+
+    window.onclick = function (event) {
+        if (event.target.className === 'auth-modal') {
+            event.target.style.display = 'none'
+        }
+    }
+
+    document.getElementById('loginForm').onsubmit = function (e) {
+        e.preventDefault()
+        // Логика логина
+    }
+
+    document.getElementById('signupForm').onsubmit = function (e) {
+        e.preventDefault()
+        // Логика реги
+    }
 </script>
 </body>
 </html>

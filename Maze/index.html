@@ -7,8 +7,14 @@
     <title>Maze</title>
     <link rel="stylesheet" href="./maze.css">
 </head>
+
+
 <body>
 
+</body>
+
+
+<body>
 <div id="page">
 
     <div id="Message-Container">
@@ -21,6 +27,12 @@
     </div>
 
     <br>
+
+    <!-- Секундомер -->
+    <div id="timer-container">
+        <h2>Time: <span id="timer">0</span> seconds</h2>
+    </div>
+
     <div id="menu">
         <div class="custom-select">
             <select id="diffSelect">
@@ -39,7 +51,10 @@
         </div>
     </div>
 
-    <p id="instructions">Use arrow keys to move the key to the house!</p>
+
+    <div id="home-section">
+        <button id="home-button" onclick="location.href='../index.html'">🏠</button>
+    </div>
 
 </div>
 
@@ -48,4 +63,31 @@
 
 <script src="./maze.js"></script>
 </body>
+
+<div id="win-modal" class="modal">
+    <div class="modal-content">
+        <span id="close-modal" class="close">&times;</span>
+        <h2>Вы выиграли!</h2>
+        <p>Введите свои данные:</p>
+        <form id="win-form">
+            <label for="nickname">Никнейм:</label>
+            <input type="text" id="nickname" name="nickname" required>
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+</div>
+
+
+<div id="leaderboard">
+    <h2>Таблица лидеров</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Никнейм</th>
+            <th>Рекорд</th>
+        </tr>
+        </thead>
+        <tbody id="leaderboard-body"></tbody>
+    </table>
+</div>
 </html>

@@ -10,9 +10,109 @@ let flagEnabled = false;
 
 let gameOver = false;
 
+let gameStarted = false;
+
+let timerInterval;
+let elapsedTime = 0;
+
 window.onload = function() {
     startGame();
 }
+
+
+function startTimer() {
+    elapsedTime = 0; // Сбрасываем время
+    const timerElement = document.getElementById('timer');
+    timerElement.textContent = elapsedTime;
+
+    // Запускаем таймер
+    timerInterval = setInterval(() => {
+        elapsedTime++;
+        timerElement.textContent = elapsedTime;
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+}
+
+function resetTimer() {
+    console.log("Reset")
+    stopTimer();
+    startTimer();
+}
+
+function showWinModal() {
+    const modal = document.getElementById('win-modal');
+    const closeModal = document.getElementById('close-modal');
+    const form = document.getElementById('win-form');
+    stopTimer();
+
+    modal.style.display = 'flex';
+
+    closeModal.onclick = () => {
+        modal.style.display = 'none';
+    };
+
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+
+        const nickname = document.getElementById('nickname').value;
+
+        // Отправка данных на бекенд
+        await submitScore(nickname, elapsedTime);
+
+        modal.style.display = 'none';
+        await fetchLeaderboard(); // Обновление таблицы лидеров
+    };
+}
+
+
+async function submitScore(nickname, time) {
+    try {
+        const response = await fetch('http://localhost:8087/submit-score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nick_name: nickname,
+                game_name: 'mine',
+                score: time, // Каждый выигрыш увеличивает счет на 1
+            }),
+        });
+        if (!response.ok) {
+            throw new Error('Ошибка при отправке данных');
+        }
+        console.log('Данные успешно отправлены');
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function fetchLeaderboard() {
+    console.log("leader bord loading ")
+    try {
+        const response = await fetch('http://localhost:8087/high-score/mine', {
+            method: 'GET'
+        });
+
+        const leaderboard = await response.json();
+
+        const leaderboardBody = document.getElementById('leaderboard-body');
+        leaderboardBody.innerHTML = '';
+
+        leaderboard.forEach((record) => {
+            const row = document.createElement('tr');
+            console.log(record)
+            row.innerHTML = `<td>${record.NickName}</td><td>${record.Score}</td>`;
+            leaderboardBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Ошибка при загрузке таблицы лидеров:', error);
+    }
+}
+
 
 function setMines() {
     // minesLocation.push("2-2");
@@ -50,11 +150,22 @@ function resetGame() {
     document.getElementById("mines-count").innerText = minesCount;
 
     // Restart the game
+    console.log("Timer reset in game reset")
+    if (gameStarted) {
+        resetTimer()
+    }
     startGame();
 }
 
 
 function startGame() {
+    fetchLeaderboard()
+    document.getElementById("start-button").addEventListener("click", () => {
+        if (!gameStarted) {
+            resetTimer()
+            gameStarted = true
+        }
+    });
     document.getElementById("mines-count").innerText = minesCount;
     document.getElementById("flag-button").addEventListener("click", setFlag);
     document.getElementById("reset-button").addEventListener("click", resetGame);
@@ -89,7 +200,7 @@ function setFlag() {
 }
 
 function clickTile() {
-    if (gameOver || this.classList.contains("tile-clicked")) {
+    if (gameOver || this.classList.contains("tile-clicked") || !gameStarted) {
         return;
     }
 
@@ -107,6 +218,7 @@ function clickTile() {
     if (minesLocation.includes(tile.id)) {
         // alert("GAME OVER");
         gameOver = true;
+        stopTimer()
         revealMines();
         return;
     }
@@ -180,8 +292,12 @@ function checkMine(r, c) {
         checkMine(r+1, c+1);    //bottom right
     }
 
-    if (tilesClicked == rows * columns - minesCount) {
+    if (tilesClicked === rows * columns - minesCount) {
+
+        //tilesClicked === rows * columns - minesCount
+
         document.getElementById("mines-count").innerText = "Cleared";
+        showWinModal()
         gameOver = true;
     }
 }

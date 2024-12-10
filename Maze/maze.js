@@ -1,3 +1,7 @@
+let timerInterval; // Хранение ID таймера
+let elapsedTime = 0; // Время в секундах
+
+
 function rand(max) {
   return Math.floor(Math.random() * max);
 }
@@ -33,8 +37,10 @@ function changeBrightness(factor, sprite) {
 }
 
 function displayVictoryMess(moves) {
-  document.getElementById("moves").innerHTML = "You Moved " + moves + " Steps.";
+  stopTimer(); // Остановить таймер
+  document.getElementById("moves").innerHTML = "It took only " + elapsedTime + " Seconds.";
   toggleVisablity("Message-Container");
+  showWinModal()
 }
 
 function toggleVisablity(id) {
@@ -219,6 +225,7 @@ function DrawMaze(Maze, ctx, cellsize, endSprite = null) {
   this.redrawMaze = function(size) {
     cellSize = size;
     ctx.lineWidth = cellSize / 50;
+
     drawMap();
     drawEndMethod();
   };
@@ -226,6 +233,12 @@ function DrawMaze(Maze, ctx, cellsize, endSprite = null) {
   function drawCell(xCord, yCord, cell) {
     var x = xCord * cellSize;
     var y = yCord * cellSize;
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(x, y, cellSize, cellSize);
+
+    // Рисуем стены ячейки
+    ctx.strokeStyle = "black";
 
     if (cell.n == false) {
       ctx.beginPath();
@@ -383,11 +396,13 @@ function Player(maze, c, _cellsize, onComplete, sprite = null) {
   function removeSprite(coord) {
     var offsetLeft = cellSize / 50;
     var offsetRight = cellSize / 25;
-    ctx.clearRect(
-      coord.x * cellSize + offsetLeft,
-      coord.y * cellSize + offsetLeft,
-      cellSize - offsetRight,
-      cellSize - offsetRight
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(
+        coord.x * cellSize + offsetLeft,
+        coord.y * cellSize + offsetLeft,
+        cellSize - offsetRight,
+        cellSize - offsetRight
     );
   }
 
@@ -569,6 +584,101 @@ window.onresize = function() {
   }
 };
 
+
+
+function startTimer() {
+  elapsedTime = 0; // Сбрасываем время
+  const timerElement = document.getElementById('timer');
+  timerElement.textContent = elapsedTime;
+
+  // Запускаем таймер
+  timerInterval = setInterval(() => {
+    elapsedTime++;
+    timerElement.textContent = elapsedTime;
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+}
+
+function resetTimer() {
+  console.log("Reset")
+  stopTimer();
+  startTimer();
+}
+
+function showWinModal() {
+  const modal = document.getElementById('win-modal');
+  const closeModal = document.getElementById('close-modal');
+  const form = document.getElementById('win-form');
+  stopTimer();
+
+  modal.style.display = 'flex';
+
+  closeModal.onclick = () => {
+    modal.style.display = 'none';
+  };
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+
+    const nickname = document.getElementById('nickname').value;
+
+    // Отправка данных на бекенд
+    await submitScore(nickname, elapsedTime);
+
+    modal.style.display = 'none';
+    await fetchLeaderboard(); // Обновление таблицы лидеров
+  };
+}
+
+
+async function submitScore(nickname, time) {
+  try {
+    const response = await fetch('http://localhost:8087/submit-score', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        nick_name: nickname,
+        game_name: 'maze',
+        score: time, // Каждый выигрыш увеличивает счет на 1
+      }),
+    });
+    if (!response.ok) {
+      throw new Error('Ошибка при отправке данных');
+    }
+    console.log('Данные успешно отправлены');
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function fetchLeaderboard() {
+  console.log("leader bord loading ")
+  try {
+    const response = await fetch('http://localhost:8087/high-score/maze', {
+      method: 'GET'
+    });
+
+    const leaderboard = await response.json();
+
+    const leaderboardBody = document.getElementById('leaderboard-body');
+    leaderboardBody.innerHTML = '';
+
+    leaderboard.forEach((record) => {
+      const row = document.createElement('tr');
+      console.log(record)
+      row.innerHTML = `<td>${record.NickName}</td><td>${record.Score}</td>`;
+      leaderboardBody.appendChild(row);
+    });
+  } catch (error) {
+    console.error('Ошибка при загрузке таблицы лидеров:', error);
+  }
+}
+
 function makeMaze() {
   if (player != undefined) {
     player.unbindKeyDown();
@@ -580,6 +690,10 @@ function makeMaze() {
   maze = new Maze(difficulty, difficulty);
   draw = new DrawMaze(maze, ctx, cellSize, finishSprite);
   player = new Player(maze, mazeCanvas, cellSize, displayVictoryMess, sprite);
+  resetTimer();
+  startTimer();
+  fetchLeaderboard()
+
   if (document.getElementById("mazeContainer").style.opacity < "100") {
     document.getElementById("mazeContainer").style.opacity = "100";
   }
