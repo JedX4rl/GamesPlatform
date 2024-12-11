@@ -1,93 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maze</title>
-    <link rel="stylesheet" href="./maze.css">
-</head>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Maze</title>
+		<link rel="stylesheet" href="./maze.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="game-menu">
+				<div id="timer-container">
+					<h2>Время: <span id="timer">0</span> сек</h2>
+				</div>
+				<input
+					id="startMazeBtn"
+					class="custom-button"
+					type="button"
+					onclick="makeMaze()"
+					value="Новая игра"
+				/>
+				<div id="menu">
+					<div class="custom-select">
+						<select id="diffSelect">
+							<option value="10">Easy</option>
+							<option value="15">Medium</option>
+							<option value="25">Hard</option>
+							<option value="38">Extreme</option>
+						</select>
+					</div>
+				</div>
+				<input
+					id="mainBtn"
+					class="custom-button"
+					type="button"
+					onclick="location.href='../index.html'"
+					value="На главный экран"
+				/>
+			</div>
 
+			<div class="current-game">
+				<div id="view">
+					<div
+						id="mazeContainer"
+						style="position: relative; text-align: center"
+					>
+						<canvas
+							id="mazeCanvas"
+							class="border"
+							style="display: none"
+						></canvas>
+						<div id="mazeMessage">
+							Выберите уровень сложности и нажмите кнопку "Новая игра", чтобы
+							начать игру
+						</div>
+					</div>
+				</div>
+			</div>
 
-<body>
+			<div class="column-3">
+				<div id="leaderboard">
+					<h2>Таблица лидеров</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Никнейм</th>
+								<th>Рекорд</th>
+							</tr>
+						</thead>
+						<tbody id="leaderboard-body"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 
-</body>
+		<div id="win-modal" class="modal" style="display: none">
+			<div class="modal-content">
+				<span id="close-modal" class="close">&times;</span>
+				<h2>Вы выиграли!</h2>
+				<p id="moves"></p>
+				<p>Введите свой никнейм, чтобы сохранить результат:</p>
+				<form id="win-form">
+					<input type="text" id="nickname" name="nickname" required />
+					<button type="submit">Сохранить</button>
+				</form>
+			</div>
+		</div>
 
+		<div id="save-notification" class="notification" style="display: none">
+			Результат успешно сохранён!
+		</div>
 
-<body>
-<div id="page">
-
-    <div id="Message-Container">
-        <div id="message">
-            <h1>Congratulations!</h1>
-            <p>You are done.</p>
-            <p id="moves"></p>
-            <input id="okBtn" type="button" onclick="toggleVisablity('Message-Container')" value="Cool!" />
-        </div>
-    </div>
-
-    <br>
-
-    <!-- Секундомер -->
-    <div id="timer-container">
-        <h2>Time: <span id="timer">0</span> seconds</h2>
-    </div>
-
-    <div id="menu">
-        <div class="custom-select">
-            <select id="diffSelect">
-                <option value="10">Easy</option>
-                <option value="15">Medium</option>
-                <option value="25">Hard</option>
-                <option value="38">Extreme</option>
-            </select>
-        </div>
-        <input id="startMazeBtn" type="button" onclick="makeMaze()" value="Start" />
-    </div>
-
-    <div id="view">
-        <div id="mazeContainer">
-            <canvas id="mazeCanvas" class="border" height="1100" width="1100"></canvas>
-        </div>
-    </div>
-
-
-    <div id="home-section">
-        <button id="home-button" onclick="location.href='../index.html'">🏠</button>
-    </div>
-
-</div>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.18/jquery.touchSwipe.min.js"></script>
-
-<script src="./maze.js"></script>
-</body>
-
-<div id="win-modal" class="modal">
-    <div class="modal-content">
-        <span id="close-modal" class="close">&times;</span>
-        <h2>Вы выиграли!</h2>
-        <p>Введите свои данные:</p>
-        <form id="win-form">
-            <label for="nickname">Никнейм:</label>
-            <input type="text" id="nickname" name="nickname" required>
-            <button type="submit">Отправить</button>
-        </form>
-    </div>
-</div>
-
-
-<div id="leaderboard">
-    <h2>Таблица лидеров</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Никнейм</th>
-            <th>Рекорд</th>
-        </tr>
-        </thead>
-        <tbody id="leaderboard-body"></tbody>
-    </table>
-</div>
+		<script
+			type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+			defer
+		></script>
+		<script
+			type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.18/jquery.touchSwipe.min.js"
+			defer
+		></script>
+		<script src="./maze.js" defer></script>
+	</body>
 </html>
