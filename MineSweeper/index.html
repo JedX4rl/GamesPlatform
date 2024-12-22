@@ -1,50 +1,79 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Minesweeper</title>
-    <link href="minesweeper.css" rel="stylesheet">
-    <script src="minesweeper.js"></script>
-</head>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Сапёр</title>
+		<link rel="stylesheet" href="./minesweeper.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="game-menu">
+				<div id="timer-container">
+					<h2>Время: <span id="timer">0</span> сек</h2>
+				</div>
+				<input
+					id="start-button"
+					class="custom-button"
+					type="button"
+					value="Новая игра"
+				/>
+				<div class="custom-select">
+					<select id="difficulty">
+						<option value="easy">Легкий</option>
+						<option value="medium">Средний</option>
+						<option value="hard">Сложный</option>
+					</select>
+				</div>
+				<input
+					id="mainBtn"
+					class="custom-button"
+					type="button"
+					value="На главный экран"
+					onclick="location.href='../index.html'"
+				/>
+			</div>
 
-<body>
-<h1 style="color: white">Mines: <span id="mines-count">0</span></h1>
-<h2 style="color: white">Time: <span id="timer">0</span> seconds</h2>
-<div id="board"></div>
-<br>
-<button id="flag-button">🚩</button>
-<button id="start-button">▶️</button>
-<button id="reset-button">🔁</button>
-<button id="home-button" onclick="location.href='../index.html'">🏠</button>
-</body>
+			<div class="current-game">
+				<div id="board"></div>
+				<div id="message-overlay">
+					Выберите уровень сложности и нажмите кнопку "Новая игра", чтобы начать
+					игру
+				</div>
+			</div>
 
-<div id="win-modal" class="modal">
-    <div class="modal-content">
-        <span id="close-modal" class="close">&times;</span>
-        <h2>Вы выиграли!</h2>
-        <p>Введите свои данные:</p>
-        <form id="win-form">
-            <label for="nickname">Никнейм:</label>
-            <input type="text" id="nickname" name="nickname" required>
-            <button type="submit">Отправить</button>
-        </form>
-    </div>
-</div>
+			<div id="win-modal" class="modal" style="display: none">
+				<div class="modal-content">
+					<span id="close-modal" class="close">&times;</span>
+					<h2>Вы выиграли!</h2>
+					<p id="moves"></p>
+					<p>Введите свой никнейм, чтобы сохранить результат:</p>
+					<form id="win-form">
+						<input type="text" id="nickname" name="nickname" required />
+						<button type="submit">Сохранить</button>
+					</form>
+				</div>
+			</div>
 
-<div id="leaderboard">
-    <h2>Таблица лидеров</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Никнейм</th>
-            <th>Рекорд</th>
-        </tr>
-        </thead>
-        <tbody id="leaderboard-body"></tbody>
-    </table>
-</div>
+			<div id="save-notification" class="notification" style="display: none">
+				Результат успешно сохранён!
+			</div>
 
-
+			<div class="column-3">
+				<div id="leaderboard">
+					<h2>Таблица лидеров</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Никнейм</th>
+								<th>Рекорд</th>
+							</tr>
+						</thead>
+						<tbody id="leaderboard-body"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script src="./minesweeper.js" defer></script>
+	</body>
 </html>
-
