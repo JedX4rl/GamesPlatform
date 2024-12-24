@@ -636,7 +636,7 @@ function showSaveNotification() {
 
 async function submitScore(nickname, time) {
 	try {
-		const response = await fetch('http://localhost:8087/submit-score', {
+		const response = await fetch('http://localhost:8087/submit-maze-score', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -659,7 +659,7 @@ async function submitScore(nickname, time) {
 async function fetchLeaderboard() {
 	console.log('leader bord loading ')
 	try {
-		const response = await fetch('http://localhost:8087/high-score/maze', {
+		const response = await fetch('http://localhost:8087/get_maze-score', {
 			method: 'GET',
 		})
 

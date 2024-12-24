@@ -66,7 +66,7 @@ function showWinModal() {
 
 async function submitScore(nickname, score) {
     try {
-        const response = await fetch('http://localhost:8087/submit-score', {
+        const response = await fetch('http://localhost:8087/submit-snake-score', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ async function submitScore(nickname, score) {
             body: JSON.stringify({
                 nick_name: nickname,
                 game_name: 'snake',
-                score: score, // Каждый выигрыш увеличивает счет на 1
+                score: score,
             }),
         });
         if (!response.ok) {
@@ -89,7 +89,7 @@ async function submitScore(nickname, score) {
 async function fetchLeaderboard() {
     console.log("leader bord loading ")
     try {
-        const response = await fetch('http://localhost:8087/high-score/snake', {
+        const response = await fetch('http://localhost:8087/get_snake-score', {
             method: 'GET'
         });
 

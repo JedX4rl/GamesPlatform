@@ -274,7 +274,7 @@ function showSaveNotification() {
 
 async function submitScore(nickname, time) {
 	try {
-		const response = await fetch('http://localhost:8087/submit-score', {
+		const response = await fetch('http://localhost:8087/submit-mine-score', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -297,7 +297,7 @@ async function submitScore(nickname, time) {
 async function fetchLeaderboard() {
 	try {
 		const response = await fetch(
-			'http://localhost:8087/leaderboard?game_name=maze'
+			'http://localhost:8087/get_mine-score'
 		)
 		if (!response.ok) {
 			throw new Error('Ошибка при получении таблицы лидеров')
