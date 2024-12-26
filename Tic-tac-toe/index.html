@@ -1,36 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic_Tac_Toe</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="turn-container">
-        <h3>Turn For</h3>
-        <div class="turn-box align">X</div>
-        <div class="turn-box align">O</div>
-        <div class="bg"></div>
-    </div>
-    <div class="main-grid">
-        <div class="box align">0</div>
-        <div class="box align">1</div>
-        <div class="box align">2</div>
-        <div class="box align">3</div>
-        <div class="box align">4</div>
-        <div class="box align">5</div>
-        <div class="box align">6</div>
-        <div class="box align">7</div>
-        <div class="box align">8</div>
-    </div>
-    <h2 id="results"></h2>
-    <div class="button-container">
-        <button id="two-player-mode">Two Player Mode</button>
-        <button id="computer-mode">Play Computer</button>
-        <button id="play-again">Play Again</button>
-        <button id="home-button" onclick="location.href='../index.html'">🏠</button>
-    </div>
-    <script src="script.js"></script>
-</body>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" href="../favicon.png" type="image/png" />
+		<title>Крестики-нолики</title>
+		<link rel="stylesheet" href="./style.css" />
+	</head>
+	<body>
+		<div class="container">
+			<!-- Боковое меню -->
+			<div class="game-menu">
+				<input
+					id="start-button"
+					class="custom-button"
+					type="button"
+					value="Новая игра"
+				/>
+				<div class="custom-select">
+					<select id="game-mode">
+						<option value="single">Один игрок</option>
+						<option value="two-player" selected>Два игрока</option>
+					</select>
+				</div>
+				<input
+					id="mainBtn"
+					class="custom-button"
+					type="button"
+					value="На главный экран"
+					onclick="location.href='../index.html'"
+				/>
+			</div>
+
+			<!-- Игровое поле -->
+			<div class="current-game">
+				<!-- Элемент для отображения результата -->
+				<div id="game-result" class="game-result"></div>
+
+				<div id="board" class="board" style="display: none">
+					<div class="box" id="box-0"></div>
+					<div class="box" id="box-1"></div>
+					<div class="box" id="box-2"></div>
+					<div class="box" id="box-3"></div>
+					<div class="box" id="box-4"></div>
+					<div class="box" id="box-5"></div>
+					<div class="box" id="box-6"></div>
+					<div class="box" id="box-7"></div>
+					<div class="box" id="box-8"></div>
+				</div>
+				<div id="message-overlay" class="message-overlay">
+					Выберите режим игры и нажмите "Новая игра", чтобы начать
+				</div>
+			</div>
+
+			<!-- Модальное окно для победы/ничьей -->
+			<div id="win-modal" class="modal" style="display: none">
+				<div class="modal-content">
+					<span id="close-modal" class="close">&times;</span>
+					<h2 id="modal-title">Победа!</h2>
+					<p id="modal-message"></p>
+					<input
+						type="text"
+						id="player-name"
+						placeholder="Введите имя игрока"
+						required
+					/>
+					<button id="save-score">Сохранить</button>
+				</div>
+			</div>
+
+			<!-- Уведомление об успешном сохранении -->
+			<div id="save-notification" class="notification" style="display: none">
+				Результат успешно сохранён!
+			</div>
+
+			<!-- Таблица лидеров -->
+			<div class="column-3">
+				<div id="leaderboard">
+					<h2>Таблица лидеров</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Игрок</th>
+								<th>Победы</th>
+							</tr>
+						</thead>
+						<tbody id="leaderboard-body"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script src="./script.js" defer></script>
+	</body>
 </html>
