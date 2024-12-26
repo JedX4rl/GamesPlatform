@@ -710,3 +710,4 @@ function makeMaze() {
 
 	fetchLeaderboard()
 }
+

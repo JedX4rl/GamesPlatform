@@ -40,6 +40,7 @@ func (h *Handler) SubmitTicTacScore(w http.ResponseWriter, r *http.Request) {
 	var info entity.ScoreRequest
 	if err := json.NewDecoder(r.Body).Decode(&info); err != nil {
 		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusInternalServerError)
+		slog.Info(err.Error())
 		return
 	}
 	if err := h.services.Score.SetTicTacScore(&info); err != nil {

@@ -1,47 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="snake.css">
-
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../favicon.png" type="image/png" />
+    <title>Змейка</title>
+    <link rel="stylesheet" href="snake.css" />
 </head>
 <body>
-<div id="gameContainer">
-    <div style="color: white"> Score: <span id="scoreText">0</span></div>
-    <canvas id="gameBoard" width="500" height="500"></canvas>
+<div class="container">
+    <div class="game-menu">
+        <div id="timer-container">
+            <h2>Счёт: <span id="scoreText">0</span></h2>
+        </div>
+        <div id="session-record-container">
+            <h3 id="sessionRecordText">Ваш рекорд за сессию: 0</h3>
+        </div>
+        <input
+                id="resetBtn"
+                class="custom-button"
+                type="button"
+                value="Новая игра"
+        />
+        <div id="menu">
+            <div class="custom-select">
+                <select id="diffSelect">
+                    <option value="Easy">Легкий</option>
+                    <option value="Medium" selected>Средний</option>
+                    <option value="Hard">Сложный</option>
+                </select>
+            </div>
+        </div>
+        <input
+                id="mainBtn"
+                class="custom-button"
+                type="button"
+                onclick="location.href='../index.html'"
+                value="На главный экран"
+        />
+    </div>
+    <div class="current-game">
+        <div id="gameContainer">
+            <canvas id="gameBoard"></canvas>
+        </div>
+        <!-- Начальное сообщение перед началом игры -->
+        <div id="message-overlay" style="display: block">
+            Выберите уровень сложности и нажмите кнопку "Новая игра", чтобы начать
+            игру.
+        </div>
+    </div>
+    <div class="column-3">
+        <div id="leaderboard">
+            <h2>Таблица лидеров</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Никнейм</th>
+                    <th>Рекорд</th>
+                </tr>
+                </thead>
+                <tbody id="leaderboard-body"></tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<button id="resetBtn">🔁</button>
-<button id="homeBtn" onclick="location.href='../index.html'">🏠</button>
-<script src="snake.js"></script>
-</body>
 
-
+<!-- Модальное окно для ввода никнейма -->
 <div id="win-modal" class="modal">
     <div class="modal-content">
         <span id="close-modal" class="close">&times;</span>
-        <h2>Вы выиграли!</h2>
-        <p>Введите свои данные:</p>
+        <h2>Поздравляем!</h2>
+        <p>Вы установили новый рекорд: <span id="newRecord"></span></p>
+        <p>Введите свой никнейм, чтобы сохранить результат:</p>
         <form id="win-form">
-            <label for="nickname">Никнейм:</label>
-            <input type="text" id="nickname" name="nickname" required>
-            <button type="submit">Отправить</button>
+            <input type="text" id="nickname" name="nickname" required />
+            <button type="submit">Сохранить</button>
         </form>
     </div>
 </div>
 
-<div id="leaderboard">
-    <h2>Таблица лидеров</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Никнейм</th>
-            <th>Рекорд</th>
-        </tr>
-        </thead>
-        <tbody id="leaderboard-body"></tbody>
-    </table>
+<!-- Уведомление об успешном сохранении результата -->
+<div id="save-notification" class="notification" style="display: none">
+    Результат успешно сохранён!
 </div>
+
+<script src="snake.js"></script>
+</body>
 </html>

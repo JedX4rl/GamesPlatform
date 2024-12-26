@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Динамичный пейзаж</title>
+		<style>
+			body {
+				margin: 0;
+				overflow: hidden;
+			}
+			canvas {
+				display: block;
+				image-rendering: pixelated;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+
+		<script>
+			const canvas = document.getElementById('canvas')
+			const ctx = canvas.getContext('2d')
+
+			const pixelSize = 4
+			canvas.width = Math.floor(window.innerWidth / pixelSize) * pixelSize
+			canvas.height = Math.floor(window.innerHeight / pixelSize) * pixelSize
+
+			// Генерация случайного цвета в заданном диапазоне (оттенки)
+			function randomColor(baseR, baseG, baseB, variation) {
+				const r = Math.min(
+					255,
+					Math.max(0, baseR + Math.floor((Math.random() - 0.5) * variation))
+				)
+				const g = Math.min(
+					255,
+					Math.max(0, baseG + Math.floor((Math.random() - 0.5) * variation))
+				)
+				const b = Math.min(
+					255,
+					Math.max(0, baseB + Math.floor((Math.random() - 0.5) * variation))
+				)
+				return `rgb(${r}, ${g}, ${b})`
+			}
+
+			function drawPixel(x, y, color) {
+				ctx.fillStyle = color
+				ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize)
+			}
+
+			function drawBackground(baseColor) {
+				ctx.fillStyle = baseColor
+				ctx.fillRect(0, 0, canvas.width, canvas.height)
+			}
+
+			function drawMountains() {
+				const layers = 3 // Количество слоев гор
+				const baseColor = { r: 128, g: 0, b: 128 } // Базовый фиолетовый цвет
+				const colors = []
+
+				// Генерация цветов для слоев гор
+				for (let i = 0; i < layers; i++) {
+					colors.push(
+						randomColor(baseColor.r, baseColor.g, baseColor.b, 40 * i)
+					)
+				}
+
+				for (let i = 0; i < layers; i++) {
+					const baseY = (canvas.height / pixelSize) * (0.5 + i * 0.1)
+					const points = []
+
+					for (let x = 0; x <= canvas.width / pixelSize; x += 10) {
+						const y = baseY - Math.random() * 20
+						points.push({ x, y })
+					}
+
+					for (let j = 0; j < points.length - 1; j++) {
+						const start = points[j]
+						const end = points[j + 1]
+						for (let x = start.x; x <= end.x; x++) {
+							const t = (x - start.x) / (end.x - start.x)
+							const y = Math.floor(start.y * (1 - t) + end.y * t)
+							for (let drawY = y; drawY < canvas.height / pixelSize; drawY++) {
+								drawPixel(x, drawY, colors[i])
+							}
+						}
+					}
+				}
+			}
+
+			function drawTrees() {
+				const treeBaseColor = { r: 50, g: 0, b: 50 } // Темно-фиолетовый
+				const treeVariation = 30 // Разброс цвета
+				for (let i = 0; i < 50; i++) {
+					const x = (Math.random() * canvas.width) / pixelSize
+					const y =
+						(canvas.height / pixelSize) * 0.7 +
+						((Math.random() * canvas.height) / pixelSize) * 0.2
+					drawTree(
+						x,
+						y,
+						randomColor(
+							treeBaseColor.r,
+							treeBaseColor.g,
+							treeBaseColor.b,
+							treeVariation
+						)
+					)
+				}
+			}
+
+			function drawTree(baseX, baseY, color) {
+				const height = Math.random() * 10 + 10 // Высота дерева
+				const width = 6 // Ширина дерева
+
+				for (let y = 0; y < height; y++) {
+					const rowWidth = width - Math.floor((y / height) * width)
+					for (let x = -rowWidth; x <= rowWidth; x++) {
+						drawPixel(baseX + x, baseY - y, color)
+					}
+				}
+			}
+
+			function generateLandscape() {
+				const backgroundColor = randomColor(255, 200, 220, 20) // Базовый розовый фон с вариацией
+				drawBackground(backgroundColor)
+				drawMountains()
+				drawTrees()
+			}
+
+			generateLandscape()
+
+			window.addEventListener('resize', () => {
+				canvas.width = Math.floor(window.innerWidth / pixelSize) * pixelSize
+				canvas.height = Math.floor(window.innerHeight / pixelSize) * pixelSize
+				generateLandscape()
+			})
+		</script>
+	</body>
+</html>

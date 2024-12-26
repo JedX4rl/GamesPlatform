@@ -42,6 +42,7 @@ func (h *Handler) getTicTacScore(w http.ResponseWriter, r *http.Request) {
 	topRecords, err := h.services.Score.GetTicTacScore()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		slog.Info(err.Error())
 		return
 	}
 	w.WriteHeader(http.StatusOK)

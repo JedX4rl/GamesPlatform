@@ -4,6 +4,7 @@ import (
 	"GamesPlatforBackend/internal/entity"
 	"database/sql"
 	"fmt"
+	"log/slog"
 )
 
 type ScorePostgres struct {
@@ -195,6 +196,7 @@ func (s ScorePostgres) GetTicTacScore() ([]entity.ScoreResponse, error) {
 	query := "SELECT * FROM get_top_5_tic_tac_toe()"
 	rows, err := tx.Query(query)
 	if err != nil {
+		slog.Info(err.Error())
 		tx.Rollback()
 		return nil, err
 	}

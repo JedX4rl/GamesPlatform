@@ -3,7 +3,9 @@
     <base href="">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>313 - лучшая группа</title>
+    <link rel="icon" href="./favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Главная</title>
     <style>
         * {
             margin: 0;
@@ -93,14 +95,20 @@
         .hero {
             margin-top: 70px;
             height: 60vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./images/Grisha.jpg');
-            background-size: cover; /* Изображение растягивается, чтобы заполнить контейнер */
-            background-position: center; /* Центрируем изображение */
-            background-repeat: no-repeat; /* Избегаем повторения изображения */
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
+        }
+
+        .hero canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
 
         .hero-content {
@@ -109,8 +117,14 @@
         }
 
         .hero-content h1 {
-            font-size: 3rem;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 5rem;
             margin-bottom: 1rem;
+            text-shadow:
+                    1px 1px 0 #2d2f50,  /* Нижний правый угол */
+                    -5px 5px 0 #2ba058, /* Нижний левый угол */
+                    1px -1px 0 #2d2f50, /* Верхний правый угол */
+                    -1px -1px 0 #2d2f50; /* Верхний левый угол */
         }
 
         .game-grid {
@@ -193,26 +207,43 @@
             cursor: pointer;
             color: var(--text);
         }
+
+        .footer {
+            background-color: #1a1b2e;
+            color: #ffffff;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            border-top: 2px solid #2d2f50;
+            margin-top: 2rem;
+        }
+
+        .footer a {
+            color: #7289da;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .footer-content p {
+            margin: 0.5rem 0;
+        }
+
     </style>
 </head>
 <body>
 <nav class="navbar">
-    <div class="logo">313 - лучшая группа</div>
-<!--    <div class="nav-links">-->
-<!--        <a href="">GitHub</a>-->
-<!--    </div>-->
-<!--    <div class="auth-buttons">-->
-<!--        <button class="login-btn" onclick="showLogin()">Login</button>-->
-<!--        <button class="signup-btn" onclick="showSignup()">Sign Up</button>-->
-<!--    </div>-->
+    <div class="logo">GamesPlatform</div>
 </nav>
 
 <section class="hero">
+    <canvas id="mainCanvas"></canvas>
     <div class="hero-content">
-<!--        <h1>Игры фиита</h1>-->
-        <h1>Григорий Мальцев</h1>
-<!--        <p>у нас есть много игр. бесплатно</p>-->
-        <p>Кучерявый</p>
+        <h1>Аркадные игры</h1>
     </div>
 </section>
 
@@ -221,12 +252,11 @@
     <a href=MineSweeper/index.html target="_self">
         <div class="game-card">
             <div class="game-image">
-                <img src="./images/test.png" alt="MineSweeper">
+                <img src="./images/minesweeper.png" alt="MineSweeper">
             </div>
             <div class="game-info">
-                <h3>MineSweeper</h3>
-                <p>Единственное, что работает</p>
-                <div class="game-price">Бесплатно</div>
+                <h3>Сапёр</h3>
+                <p>Классический сапёр</p>
             </div>
         </div>
     </a>
@@ -235,12 +265,11 @@
 
         <div class="game-card">
             <div class="game-image">
-                <img src="./images/test.png" alt="<Maze>">
+                <img src="./images/maze.png" alt="<Maze>">
             </div>
             <div class="game-info">
-                <h3>Maze</h3>
-                <p>Meow, meow</p>
-                <div class="game-price">Бесплатно</div>
+                <h3>Лабиринт</h3>
+                <p>Попробуй пройти!</p>
             </div>
         </div>
     </a>
@@ -249,12 +278,11 @@
 
         <div class="game-card">
             <div class="game-image">
-                <img src="./images/test.png" alt="Tic-tac-toe">
+                <img src="./images/tictactoe.png" alt="Tic-tac-toe">
             </div>
             <div class="game-info">
                 <h3>Крестики-Нолики</h3>
                 <p>Увлекательная игра на двоих</p>
-                <div class="game-price">$0.99</div>
             </div>
         </div>
     </a>
@@ -263,34 +291,35 @@
 
         <div class="game-card">
             <div class="game-image">
-                <img src="./images/test.png" alt="Snake">
+                <img src="./images/snake.png" alt="Snake">
             </div>
             <div class="game-info">
-                <h3>Snake</h3>
-                <p>Play with me</p>
-                <div class="game-price">Free!</div>
+                <h3>Змейка</h3>
+                <p>Поиграй со мной!</p>
             </div>
         </div>
 
     </a>
-    <div class="game-card">
-        <div class="game-image">
-            <img src="./images/test.png" alt="ТикТОкХое">
-        </div>
-        <div class="game-info">
-            <h3>ТикТОкХое</h3>
-            <p>На подумать</p>
-            <div class="game-price">$2999.99</div>
-        </div>
-    </div>
 
 </section>
 
-<!-- Логинимся -->
+<footer class="footer">
+    <div class="footer-content">
+        <p>&copy; <span id="current-year"></span>. Все права защищены.</p>
+        <p>
+            <a href="https://github.com/JedX4rl/GamesPlatform" target="_blank">GitHub</a> | Сделано с 💖
+        </p>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+
 <div id="loginModal" class="auth-modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
-        <h2>Login to GameVault</h2>
+        <h2>Войдите в свой аккаунт</h2>
         <form id="loginForm">
             <div class="form-group">
                 <input type="email" placeholder="Email" required>
@@ -298,16 +327,15 @@
             <div class="form-group">
                 <input type="password" placeholder="Password" required>
             </div>
-            <button class="signup-btn" style="width: 100%">Login</button>
+            <button class="signup-btn" style="width: 100%">Войти</button>
         </form>
     </div>
 </div>
 
-<!-- Регаемся -->
 <div id="signupModal" class="auth-modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal('signupModal')">&times;</span>
-        <h2>Create Account</h2>
+        <h2>Зарегистрируйтесь</h2>
         <form id="signupForm">
             <div class="form-group">
                 <input type="text" placeholder="Username" required>
@@ -355,5 +383,331 @@
         // Логика реги
     }
 </script>
+
+<script>
+    const DAY_CYCLE_DURATION = 90_000
+    const CAMERA_SPEED = 10
+    const STAR_COUNT = 200
+    const CLOUD_COUNT = 8
+
+    const canvas = document.getElementById('mainCanvas')
+    const ctx = canvas.getContext('2d')
+
+    const hero = document.querySelector('.hero');
+    const heroWidth = hero.offsetWidth;
+    const heroHeight = hero.offsetHeight;
+
+    canvas.width = heroWidth;
+    canvas.height = heroHeight;
+
+    ctx.imageSmoothingEnabled = false
+
+    const offscreen = document.createElement('canvas')
+    offscreen.width = canvas.width * 2
+    offscreen.height = canvas.height
+    const offctx = offscreen.getContext('2d')
+    offctx.imageSmoothingEnabled = false
+
+    generateLandscape(offctx, offscreen.width, offscreen.height)
+
+    function generateLandscape(g, w, h) {
+        drawMountains(g, w, h)
+        drawGrassAndFlowers(g, w, h)
+        drawStreams(g, w, h)
+        drawTrees(g, w, h)
+    }
+
+    function drawMountains(g, w, h) {
+        g.fillStyle = '#4c4c69'
+        const pxSize = 4
+        const numMountains = 5
+        const bufferZone = w * 0.15 // Буферная зона по краям
+
+        for (let i = 0; i < numMountains; i++) {
+            const peakX = bufferZone + Math.random() * (w - 2 * bufferZone)
+            const peakY = h * (0.3 + 0.1 * Math.random())
+            const baseWidth = w * (0.2 + 0.2 * Math.random())
+
+            for (let y = peakY; y < h; y += pxSize) {
+                const progress = (y - peakY) / (h - peakY)
+                const currentWidth = baseWidth * progress
+                const left = peakX - currentWidth / 2
+                for (let x = left; x < left + currentWidth; x += pxSize) {
+                    g.fillRect(x, y, pxSize, pxSize)
+                }
+            }
+        }
+    }
+
+    function drawGrassAndFlowers(g, w, h) {
+        const grassColor = '#3cb043'
+        const flowerColors = ['#ff69b4', '#ff4500', '#ffff00', '#8a2be2']
+        const pxSize = 4
+        const grassHeight = 30
+
+        g.fillStyle = grassColor
+        for (let x = 0; x < w; x += pxSize) {
+            const yOffset = Math.sin(x / 50) * 10
+            g.fillRect(
+                x,
+                h - grassHeight + yOffset,
+                pxSize,
+                grassHeight - yOffset
+            )
+        }
+
+        for (let i = 0; i < 200; i++) {
+            const x = Math.random() * w
+            const y = h - grassHeight + Math.random() * grassHeight
+            const flowerColor =
+                flowerColors[Math.floor(Math.random() * flowerColors.length)]
+            g.fillStyle = flowerColor
+            g.fillRect(x, y, pxSize, pxSize)
+        }
+    }
+
+    function drawStreams(g, w, h) {
+        const streamColor = '#1e90ff'
+        const pxSize = 4
+        const numStreams = 5
+        const grassHeight = 30
+        const bufferZone = w * 0.05 // Буферная зона по краям
+
+        for (let i = 0; i < numStreams; i++) {
+            const startX = bufferZone + Math.random() * (w - 2 * bufferZone - 100)
+            const startY = h - grassHeight + Math.random() * 10
+            const streamWidth = 8 + Math.random() * 10
+            const streamLength = 50 + Math.random() * 100
+
+            g.fillStyle = streamColor
+            g.fillRect(startX, startY, streamLength, streamWidth)
+        }
+    }
+
+    function drawTrees(g, w, h) {
+        const treeColor = '#1d3922'
+        const trunkColor = '#3e2f2f'
+        const pxSize = 4
+        const numTrees = 120
+        const grassHeight = 30
+        const bufferZone = w * 0.15 // Буферная зона по краям
+
+        for (let i = 0; i < numTrees; i++) {
+            const x = bufferZone + Math.random() * (w - 2 * bufferZone)
+            const baseY = h - grassHeight + Math.random() * grassHeight
+
+            const treeHeight = 40 + Math.random() * 60
+            const trunkHeight = treeHeight * 0.2
+            const trunkWidth = 4
+
+            g.fillStyle = trunkColor
+            g.fillRect(x, baseY - trunkHeight, trunkWidth, trunkHeight)
+
+            g.fillStyle = treeColor
+            const crownHeight = treeHeight * 0.8
+            const crownWidth = crownHeight
+            for (let yy = 0; yy < crownHeight; yy += pxSize) {
+                const progress = yy / crownHeight
+                const currentWidth = crownWidth * (1 - progress)
+                const startX = x + trunkWidth / 2 - currentWidth / 2
+                const yPos = baseY - trunkHeight - yy
+                for (let xx = startX; xx < startX + currentWidth; xx += pxSize) {
+                    g.fillRect(xx, yPos, pxSize, pxSize)
+                }
+            }
+        }
+    }
+
+    const stars = []
+    for (let i = 0; i < STAR_COUNT; i++) {
+        stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * (canvas.height * 0.5),
+            baseAlpha: 0.2 + Math.random() * 0.8,
+            freq: 2 + Math.random() * 3,
+            phase: Math.random() * Math.PI * 2,
+        })
+    }
+
+    function drawStars(t, nowSec) {
+        let starVisibility = 1.0
+        if (t < 0.2) {
+            starVisibility = 1.0 - t / 0.2
+        } else if (t >= 0.2 && t <= 0.5) {
+            starVisibility = 0
+        } else if (t > 0.5 && t < 0.7) {
+            starVisibility = (t - 0.5) / 0.2
+        } else {
+            starVisibility = 1.0
+        }
+
+        for (let s of stars) {
+            const flicker = 0.5 + 0.5 * Math.sin(s.freq * nowSec + s.phase)
+            const alpha = s.baseAlpha * flicker * starVisibility
+            if (alpha < 0.01) continue
+            ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`
+            ctx.fillRect(s.x, s.y, 2, 2)
+        }
+    }
+
+    const keyframes = [
+        { t: 0.0, color: { r: 255, g: 115, b: 42 } }, // Утро (мягкий желтоватый)
+        { t: 0.05, color: { r: 255, g: 186, b: 99 } }, // Полдень (яркое голубое небо)
+        { t: 0.15, color: { r: 135, g: 206, b: 235 } }, // Полдень (яркое голубое небо)
+        { t: 0.3, color: { r: 92, g: 143, b: 255 } }, // Послеобеденное небо
+        { t: 0.4, color: { r: 190, g: 20, b: 90 } }, // Глубокий закат
+        { t: 0.5, color: { r: 86, g: 12, b: 52 } }, // Конец заката
+        { t: 0.65, color: { r: 20, g: 24, b: 50 } }, // Сумерки
+        { t: 0.92, color: { r: 70, g: 20, b: 90 } }, // Ночь
+        { t: 1.0, color: { r: 255, g: 115, b: 42 } }, // Возвращение к утру
+    ]
+
+    function lerp(a, b, t) {
+        return a + (b - a) * t
+    }
+
+    function getSkyColor(t) {
+        let kf0 = keyframes[0]
+        let kf1 = keyframes[keyframes.length - 1]
+        for (let i = 0; i < keyframes.length - 1; i++) {
+            if (t >= keyframes[i].t && t <= keyframes[i + 1].t) {
+                kf0 = keyframes[i]
+                kf1 = keyframes[i + 1]
+                break
+            }
+        }
+        const segT = (t - kf0.t) / (kf1.t - kf0.t)
+        const r = Math.round(lerp(kf0.color.r, kf1.color.r, segT))
+        const g = Math.round(lerp(kf0.color.g, kf1.color.g, segT))
+        const b = Math.round(lerp(kf0.color.b, kf1.color.b, segT))
+        return `rgb(${r}, ${g}, ${b})`
+    }
+
+    function getSunMoonPosition(t) {
+        const centerX = canvas.width * 0.5
+        const centerY = canvas.height * 0.8
+        const radius = canvas.height * 0.7
+
+        let angleDeg
+        if (t < 0.5) {
+            const localT = t / 0.5
+            angleDeg = 210 - 240 * localT
+        } else {
+            const localT = (t - 0.5) / 0.5
+            angleDeg = 210 - 240 * localT
+        }
+
+        const angleRad = (angleDeg * Math.PI) / 180
+        const x = centerX + radius * Math.cos(angleRad)
+        const y = centerY - radius * Math.sin(angleRad)
+        return { x, y }
+    }
+
+    function drawSunMoon(t, nowSec) {
+        const { x, y } = getSunMoonPosition(t)
+        const pxSize = 4
+        const radius = 24
+
+        const flicker = 0.9 + 0.1 * Math.sin(nowSec * 2)
+
+        if (t < 0.5) {
+            ctx.fillStyle = `rgba(255,216,0,${flicker.toFixed(2)})`
+        } else {
+            ctx.fillStyle = `rgba(200,200,200,${flicker.toFixed(2)})`
+        }
+
+        for (let dy = -radius; dy <= radius; dy += pxSize) {
+            for (let dx = -radius; dx <= radius; dx += pxSize) {
+                if (dx * dx + dy * dy <= radius * radius) {
+                    ctx.fillRect(x + dx, y + dy, pxSize, pxSize)
+                }
+            }
+        }
+    }
+
+    const clouds = []
+    for (let i = 0; i < CLOUD_COUNT; i++) {
+        clouds.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height * 0.4,
+            width: 60 + Math.random() * 100,
+            height: 30 + Math.random() * 30,
+            speed: 10 + Math.random() * 20,
+        })
+    }
+
+    function updateAndDrawClouds(dt) {
+        const pxSize = 4
+        ctx.fillStyle = '#ffffff'
+        for (let c of clouds) {
+            c.x += c.speed * dt
+            if (c.x > canvas.width + c.width) {
+                c.x = -c.width
+                c.y = Math.random() * canvas.height * 0.4
+            }
+            for (let yy = 0; yy < c.height; yy += pxSize) {
+                for (let xx = 0; xx < c.width; xx += pxSize) {
+                    ctx.fillRect(c.x + xx, c.y + yy, pxSize, pxSize)
+                }
+            }
+        }
+    }
+
+    let cameraX = 0
+
+    function drawScrollingBackground() {
+        const w = canvas.width
+        const h = canvas.height
+
+        ctx.drawImage(offscreen, cameraX, 0, w, h, 0, 0, w, h)
+
+        if (cameraX + w > offscreen.width) {
+            const remaining = offscreen.width - cameraX
+            const secondPart = w - remaining
+            ctx.drawImage(
+                offscreen,
+                0,
+                0,
+                secondPart,
+                h,
+                remaining,
+                0,
+                secondPart,
+                h
+            )
+        }
+    }
+
+    let prevTime = performance.now()
+
+    function animate(nowMS) {
+        requestAnimationFrame(animate)
+
+        const dt = (nowMS - prevTime) / 1000
+        prevTime = nowMS
+
+        const dayProgress = (nowMS % DAY_CYCLE_DURATION) / DAY_CYCLE_DURATION
+
+        const skyColor = getSkyColor(dayProgress)
+        ctx.fillStyle = skyColor
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+        drawStars(dayProgress, nowMS / 1000)
+
+        drawSunMoon(dayProgress, nowMS / 2000)
+
+        drawScrollingBackground()
+
+        updateAndDrawClouds(dt)
+
+        cameraX += CAMERA_SPEED * dt
+        if (cameraX >= offscreen.width) {
+            cameraX -= offscreen.width
+        }
+    }
+
+    requestAnimationFrame(animate)
+</script>
+
 </body>
 </html>
