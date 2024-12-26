@@ -138,9 +138,31 @@ function clickTile(tile) {
 }
 
 function ensureSafeStart(firstClickId) {
-	if (minesLocation.includes(firstClickId)) {
-		minesLocation = minesLocation.filter(id => id !== firstClickId)
-		placeAdditionalMine()
+	const [r, c] = firstClickId.split('-').map(Number)
+	const safeZone = []
+
+	// Определяем все 8 соседних ячеек + текущую
+	for (let dr = -1; dr <= 1; dr++) {
+		for (let dc = -1; dc <= 1; dc++) {
+			const nr = r + dr
+			const nc = c + dc
+			if (nr >= 0 && nr < rows && nc >= 0 && nc < columns) {
+				safeZone.push(`${nr}-${nc}`)
+			}
+		}
+	}
+
+	// Убираем мины из безопасной зоны
+	minesLocation = minesLocation.filter(mine => !safeZone.includes(mine))
+
+	// Добавляем новые мины в случайные доступные ячейки
+	while (minesLocation.length < minesCount) {
+		const randomR = Math.floor(Math.random() * rows)
+		const randomC = Math.floor(Math.random() * columns)
+		const newMine = `${randomR}-${randomC}`
+		if (!minesLocation.includes(newMine) && !safeZone.includes(newMine)) {
+			minesLocation.push(newMine)
+		}
 	}
 }
 
@@ -296,9 +318,7 @@ async function submitScore(nickname, time) {
 
 async function fetchLeaderboard() {
 	try {
-		const response = await fetch(
-			'http://localhost:8087/get_mine-score'
-		)
+		const response = await fetch('http://localhost:8087/get_mine-score')
 		if (!response.ok) {
 			throw new Error('Ошибка при получении таблицы лидеров')
 		}
