@@ -133,6 +133,11 @@ body {
 	background-color: rgba(0, 0, 0, 0.7);
 }
 
+#mainBtn {
+	position: fixed;
+	bottom: 2rem;
+}
+
 input.custom-button {
 	cursor: pointer;
 	width: 12rem;
